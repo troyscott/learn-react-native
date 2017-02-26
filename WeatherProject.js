@@ -16,11 +16,7 @@ export default class WeatherProject extends Component {
       this._handleTextChange = this._handleTextChange.bind(this);
       this.state = {
           zip: '',
-          forecast: {
-              main: 'Clouds',
-              description: 'few clouds',
-              temp: 45.7
-          }
+          forecast: null
       };
   }
   // We'll pass this callback to the <TextInput>
@@ -33,34 +29,72 @@ export default class WeatherProject extends Component {
     });
 }
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>
-          You input {this.state.zip}.
-        </Text>
-        <Forecast
+    var content = null;
+    if (this.state.forecast !== null) {
+        content = <Forecast
             main={this.state.forecast.main}
             description={this.state.forecast.description}
             temp={this.state.forecast.temp}
-         />
-        <TextInput
-              style={styles.input}
-              returnKeyType='go'
-              onSubmitEditing={this._handleTextChange} />
+            />;
+    }
+    return (
+      <View style={styles.container}>
+        <Image source={require('./img/snow.png')}
+            style={styles.backdrop}
+            resizeMode="cover"
+            >
+        <View style={styles.overlay}>
+         <View style={styles.row}>
+            <Text>
+                Current weather for
+            </Text>
+            <View style={styles.zipContainer}>
+                <TextInput
+                    style={styles.input}
+                    returnKeyType='go'
+                    onSubmitEditing={this._handleTextChange} />
+            </View>
+       </View>
+       {content}
 
-
+      </View>
+      </Image>
     </View>
           );
   }
 };
 
 var styles = StyleSheet.create({
+  backdrop: {
+    flex: 1,
+    flexDirection: 'column'
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#4D4D4D',
   },
+  overlay: {
+    paddingTop: 5,
+    backgroundColor: '#000000',
+    opacity: 0.5,
+    alignItems: 'center'
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    alignItems: 'flex-start',
+    padding: 30
+  },
+  zipContainer: {
+    flex: 1,
+    borderBottomColor: '#DDDDDD',
+    borderBottomWidth: 1,
+    marginLeft: 5,
+    marginTop: 3
+},
   welcome: {
     fontSize: 12,
     textAlign: 'center',
