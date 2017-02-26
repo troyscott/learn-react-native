@@ -4,4 +4,5 @@ import { AppRegistry } from 'react-native';
 import Hello from './HelloWorld';
 import WeatherProject from './WeatherProject';
 
+
 AppRegistry.registerComponent('AwsomeProject', () => WeatherProject);
